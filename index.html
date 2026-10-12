@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLAZEBORN</title>
+<link rel="icon" href="favicon.png">
+<style>
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;transition:background .25s,color .25s}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+.box{background:var(--card);border:var(--bw) solid var(--border);border-radius:var(--r)}
+#top{position:sticky;top:0;z-index:50}
+.bar{background:var(--barBg);color:var(--barFg);font-size:12px;line-height:1;overflow:hidden;white-space:nowrap;padding:7px 0}
+.track{display:inline-flex;animation:mq 32s linear infinite;will-change:transform}
+.track .grp{display:inline-flex}
+.track .grp span{padding-right:56px}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.track{animation-duration:120s}}
+.hdr{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--bg);border-bottom:1px solid var(--border)}
+.ib{width:42px;height:42px;border:0;background:none;display:grid;place-items:center;border-radius:10px}
+.ib:hover{background:color-mix(in srgb,var(--fg) 10%,transparent)}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;font-weight:800;font-size:18px;letter-spacing:.2px}
+.brand img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+.round{width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--accentFg);font-size:20px;position:relative;margin-left:auto}
+.round:hover{background:var(--accent)}
+#cc{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--fg);color:var(--bg);font:700 11px/20px system-ui,sans-serif;font-style:normal}
+#cc:empty{display:none}
+.cover img{width:100%;max-height:380px;object-fit:cover}
+.ptitle{max-width:1100px;margin:0 auto;padding:26px 14px 0;font-size:30px;line-height:1.15}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 14px 40px}
+.about{margin:10px 0 0;padding-top:10px}
+.about h2{margin:0 0 12px;font-size:26px;line-height:1.15}
+.about p{margin:0 0 16px;max-width:75ch}
+.about .aimg{width:100%;max-width:760px;border-radius:var(--r);margin:0 0 16px}
+.foot{border-top:4px solid #888;padding:22px 14px 96px;text-align:center;font-size:14px}
+.foot span{opacity:.75}
+.blk{margin:0 0 26px}
+.t1{font-size:30px;line-height:1.15;margin:0 0 14px}
+.t2{font-size:21px;line-height:1.25;margin:0 0 10px}
+.ptxt{margin:0;white-space:normal}
+.imgblk{overflow:hidden}
+.imgblk img{width:100%}
+.imgblk figcaption{padding:10px 14px;font-size:14px;opacity:.8}
+.win{padding:16px 18px}
+.win h3{margin:0 0 6px;font-size:18px}
+.win p{margin:0}
+.sech{margin:0 0 12px;font-size:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ptitle,.t1{font-size:24px}}
+.pcard{background:var(--pbg,var(--card));color:var(--pfg,var(--fg));overflow:hidden;display:flex;flex-direction:column}
+.pimg{position:relative;aspect-ratio:1/1;cursor:pointer;background:color-mix(in srgb,var(--fg) 8%,transparent);overflow:hidden}
+.pimg img{width:100%;height:100%;object-fit:var(--fit,cover)}
+.badge{position:absolute;top:8px;left:8px;background:var(--accent);color:var(--accentFg);font-size:12px;font-weight:700;padding:3px 9px;border-radius:min(var(--r),10px)}
+.badge.av{left:auto;right:8px}
+.badge.off{background:#444;color:#fff}
+.pinfo{padding:10px 12px 4px;flex:1}
+.pinfo h3{margin:0 0 4px;font-size:15px;line-height:1.25}
+.price .old{opacity:.55;margin-right:6px;font-size:.9em}
+.price .now{font-size:1.05em}
+.price.big{font-size:22px;margin:4px 0 10px}
+.pbtns{display:grid;gap:8px;padding:10px 12px 12px}
+.btn{display:block;width:100%;padding:11px 14px;border-radius:min(var(--r),22px);border:2px solid var(--pbtn,var(--accent));background:var(--pbtn,var(--accent));color:var(--pbtnfg,var(--accentFg));font-weight:700;text-align:center}
+.btn.ghost{background:transparent;color:var(--pbtn,var(--accent))}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn+.btn{margin-top:8px}
+.lnk{background:none;border:0;text-decoration:underline;padding:8px;opacity:.8;width:100%}
+.empty{opacity:.65;text-align:center;padding:20px 0;margin:0}
+.wa{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:60}
+#layer{position:relative;z-index:100}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;opacity:0;transition:opacity .2s}
+.ov.in{opacity:1}
+.ov.r{justify-content:flex-end}
+.drawer{width:min(400px,92vw);height:100%;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .28s ease}
+.ov.r .drawer{transform:translateX(100%);width:min(460px,100vw)}
+.ov.in .drawer{transform:none}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+.dh h3{margin:0;font-size:19px}
+.dbody{flex:1;overflow:auto;padding:14px 16px}
+.df{padding:14px 16px;border-top:1px solid var(--border)}
+.x{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--card);font-size:15px;line-height:1;display:grid;place-items:center;flex:none}
+.msec{margin-bottom:22px}
+.lbl{font-size:13px;opacity:.7;margin:0 0 6px;font-weight:600}
+.nav{display:block;width:100%;text-align:left;padding:11px 12px;background:none;border:0;border-radius:10px;font-weight:600}
+.nav:hover{background:color-mix(in srgb,var(--fg) 9%,transparent)}
+.in,.fi input,.fi textarea{width:100%;padding:11px 12px;background:var(--bg);border:1px solid color-mix(in srgb,var(--fg) 28%,transparent);border-radius:min(var(--r),12px);outline:0}
+.in:focus,.fi input:focus,.fi textarea:focus{border-color:var(--accent)}
+.sr{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--card);border:1px solid var(--border);border-radius:min(var(--r),12px);padding:8px;margin-top:8px}
+.sr img{width:48px;height:48px;object-fit:cover;border-radius:8px}
+.sr span{display:grid;line-height:1.25}
+.sr small{opacity:.8}
+.swr{display:flex;align-items:center;gap:12px;font-size:14px}
+.swr>span{opacity:.5}.swr>span.on{opacity:1;font-weight:700}
+.sw{width:56px;height:30px;border-radius:15px;border:0;background:color-mix(in srgb,var(--fg) 25%,transparent);position:relative;padding:0;flex:none}
+.sw i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--accent);transition:transform .2s}
+.sw.r i{transform:translateX(26px)}
+.mod{align-items:center;justify-content:center;padding:14px}
+.dlg{position:relative;background:var(--bg);color:var(--fg);width:min(920px,100%);max-height:100%;overflow:auto;padding:18px}
+.dlg>.x{position:absolute;top:10px;right:10px;z-index:3}
+.pmg{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:700px){.pmg{grid-template-columns:1fr}}
+.gal .main{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--r)}
+.th{display:flex;gap:8px;margin-top:8px;overflow:auto}
+.th img{width:62px;height:62px;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer;flex:none}
+.th img.on{border-color:var(--accent)}
+.pmi h2{margin:0 36px 0 0;font-size:24px;line-height:1.2}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chip{padding:8px 14px;border:1px solid var(--border);background:var(--card);border-radius:min(var(--r),18px);font-weight:600}
+.chip.on{background:var(--accent);color:var(--accentFg);border-color:var(--accent)}
+.gw{position:relative}
+.garr{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;padding:0}
+.garr.l{left:8px}.garr.r{right:8px}
+.garr:hover{background:rgba(0,0,0,.75)}
+.car{position:relative;overflow:hidden;width:100%;height:100%}
+.car.gcar{height:auto;aspect-ratio:1/1;border-radius:var(--r);margin-left:auto;margin-right:auto}
+.trk{display:flex;height:100%;transition:transform .38s cubic-bezier(.4,0,.2,1);will-change:transform}
+.trk img{flex:0 0 100%;min-width:0;width:100%;height:100%;object-fit:var(--fit,cover)}
+.arw{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center;z-index:2;padding:0}
+.arw:hover{background:rgba(0,0,0,.7)}
+.arw.l{left:8px}.arw.r{right:8px}
+.nav{display:flex;justify-content:space-between;align-items:center}
+.nav:disabled{opacity:.5;cursor:default}
+.chev{font-size:22px;line-height:1;opacity:.7}
+.back{display:flex;align-items:center;gap:6px;background:none;border:0;font-weight:700;font-size:15px;padding:6px 4px}
+.back span{font-size:24px;line-height:1}
+.sub-in{animation:subin .25s ease}
+@keyframes subin{from{opacity:0;transform:translateX(24px)}}
+.sumbox{position:sticky;top:0;z-index:6;transition:padding .2s,box-shadow .2s}
+.sumbox.mini{padding:8px 14px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.sumbox.mini .row{font-size:13px;margin-bottom:1px}
+.sumbox.mini .row.tot{font-size:16px;margin-top:2px;padding-top:4px}
+.sumbox.mini .note{display:none}
+.rimgs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.rimg{width:84px;height:84px;object-fit:cover;border-radius:min(var(--r),10px);cursor:zoom-in}
+.chip.off,.chip:disabled{text-decoration:line-through;opacity:.45;cursor:not-allowed}
+.ic{display:block;object-fit:contain;flex:none}
+.ic-cart{width:26px;height:26px}.ic-whatsapp{width:34px;height:34px}
+.err{color:#e5484d;font-size:13px;min-height:18px;margin-bottom:6px}
+.revs{margin-top:22px}
+.revs h3{margin:0 0 10px}
+.rl{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.rev{flex:0 0 min(260px,82%);scroll-snap-align:start;padding:12px;display:grid;gap:6px;align-content:start}
+.rev .top{display:flex;gap:10px;align-items:center}
+.av{width:42px;height:42px;border-radius:50%;background:color-mix(in srgb,var(--fg) 14%,transparent);display:grid;place-items:center;flex:none;overflow:hidden}
+.stars{color:#f5a623;letter-spacing:2px;font-size:14px}
+.rev p{margin:0;font-size:14px}
+.guide .gimg{width:100%;max-height:78vh;object-fit:var(--fit,contain);margin-top:30px}
+.ci{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.ci img{width:62px;height:62px;object-fit:cover;border-radius:8px;flex:none}
+.cin{flex:1;min-width:0;display:grid;gap:2px}
+.cin small{opacity:.7}
+.cs{font-weight:700;white-space:nowrap}
+.qty{display:flex;align-items:center;gap:10px;margin-top:4px}
+.qty button{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--card);font-size:16px;line-height:1}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+.row.tot{font-size:20px;font-weight:800;margin-top:6px;padding-top:8px;border-top:1px solid var(--border)}
+.note{font-size:12px;opacity:.7;margin:0 0 10px}
+.ck{position:fixed;inset:0;background:var(--bg);color:var(--fg);overflow:auto}
+.ckw{max-width:720px;margin:0 auto;padding:16px 14px 60px}
+.ckh{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ckh h2{margin:0;font-size:24px}
+.ckw>section{padding:16px;margin-bottom:14px}
+.ckw h3{margin:0 0 10px;font-size:17px}
+.cr{display:flex;gap:8px}
+.cr .btn{width:auto;white-space:nowrap}
+.msg{font-size:13px;margin-top:8px;min-height:18px}
+.msg.ok{color:#1f9d57}.msg.bad{color:#e5484d}
+.fi{display:block;margin-bottom:12px}
+.fi>span{display:block;font-size:13px;opacity:.8;margin-bottom:4px}
+.fi textarea{min-height:110px;resize:vertical}
+.sm{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:1px solid var(--border);background:var(--bg);border-radius:min(var(--r),16px);margin-bottom:8px;text-align:left;font-weight:700}
+.sm.sel{border-color:var(--accent);border-width:2px}
+.sm img{width:46px;height:46px;object-fit:var(--fit,contain);flex:none}
+.sm .ph{width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--accentFg);display:grid;place-items:center;flex:none}
+.opt{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:1px solid var(--border);background:var(--bg);border-radius:min(var(--r),16px);margin-bottom:8px;text-align:left}
+.opt b{margin-left:auto}
+.cdot{width:22px;height:22px;border-radius:50%;border:2px solid var(--accent);display:grid;place-items:center;flex:none}
+.cdot.on::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:999px;z-index:9999;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.cover img,.imgblk img,.aimg,.gal .main,.gimg{margin-left:auto;margin-right:auto}
+.cover img,.imgblk img,.aimg,.gal .main{object-fit:var(--fit,cover)}
+[style*="--tfs:"]{font-size:var(--tfs)!important}
+@media(max-width:700px){[style*="--tfm:"]{font-size:var(--tfm)!important}}
+[style*="--dw:"]{width:var(--dw)!important}
+[style*="--dh:"]{height:var(--dh)!important;max-height:none!important;aspect-ratio:auto!important}
+@media(max-width:700px){[style*="--mw:"]{width:var(--mw)!important}[style*="--mh:"]{height:var(--mh)!important;max-height:none!important;aspect-ratio:auto!important}}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script type="application/json" id="store-data">{"v":1,"store":{"name":"BLAZEBORN","logo":"favicon.png","cover":"blazelogo.png","showCover":true,"whatsapp":"5493704509580","currency":"ARS","rate":1200,"coverSz":{"dw":"","dh":"","mw":"","mh":"","fit":"contain"},"iconSz":{"dw":"","dh":""}},"menu":{"search":true,"themes":false,"subpages":true,"homeLabel":"INICIO","subLabel":"CATEGORÍAS"},"about":{"enabled":true,"title":"Quiénes somos","text":"Somos una marca ubicada en la capital de Formosa, dedicada a hacer ropa para gente que entrena duro y necesita vestir luciendo sus resultados.\n\nNos especializamos en ropa que no solo se adapta a tu cuerpo, sino que también te hace lucir estético tanto en el gimnasio como en la calle.","imgOn":false,"img":"mockup.png","imgPos":"after","align":"left"},"footer":{"enabled":true,"lineColor":"#ffffff","year":"2026","text":"Todos los derechos reservados.","align":"center"},"themeNames":["Tema claro","Tema oscuro"],"themeMode":"single","defaultTheme":1,"bar":{"enabled":true,"mode":"amount","units":3,"amount":650000,"text":"Envío gratis"},"excl":{"enabled":true,"province":"Formosa","city":"Formosa"},"ships":[{"id":"trn0b5","name":"Correo Argentino","icon":"correoargentino.png","branch":7500,"home":9500,"sz":{"fit":"contain"}},{"id":"iylara","name":"Andreani","icon":"andreani.png","branch":9000,"home":11000,"sz":{"fit":"contain"}}],"codes":[{"id":"jaj9eq","code":"NAVARRETE","pct":10},{"id":"cc7sjn","code":"NATY","pct":10},{"id":"wa1v6z","code":"SANTI10","pct":10},{"id":"4ug5pj","code":"RIVATOMY","pct":10},{"id":"oplm1a","code":"SUAR","pct":10}],"products":[{"id":"y54r6s","name":"Remera de Compresión Tribal Roja","price":38000,"promo":32000,"desc":"Remera de Compresión tribal con diseño gótico y oscuro, ideal para entrenar o salir luciendo tu físico y una buena ropa.","listed":true,"stock":true,"images":["compresrojo.jpg","compresrojo1.jpg","compresrojo2.jpg"],"sizes":[{"name":"XS","avail":false},{"name":"S","avail":false},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":true,"file":"tallecompresion.png","sz":{"fit":"contain"}},"reviews":[{"id":"rbwf51","name":"Lautaro R.","stars":5,"text":"La remera es de muy buena calidad, viene ajustable y no retiene el mal olor.","images":["opinion-1-compresion.jpg"],"sz":{"mw":"","mh":"","dw":250,"dh":250,"fit":"contain"}},{"id":"s1qm3h","name":"Ricardo B.","stars":5,"text":"el diseño Facherisimo y la calidad exelente, 10/10 se lucieron","images":[]},{"id":"tct9dv","name":"Dante O.","stars":5,"text":"La remera es muy cómoda y te deja respirar a pesar de ser ajustada.\nes livianita y no larga mal olor, la recomiendo.","images":["opinion-2-compresion.jpg"],"sz":{"dw":250,"dh":250,"fit":"contain"}},{"id":"j6lwt2","name":"Jorge G.","stars":5,"text":"Me esperaba otra cosa pero la remera superó mis expectativas.","images":["opinion-3-compresion.jpg"]}],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"szCard":{"fit":"contain","dw":0,"dh":0},"szMain":{"dw":"","fit":"contain"},"align":"left","cat":"dezzx6"},{"id":"nub200","name":"Remera de Compresión Tribal Morada","price":38000,"promo":32000,"desc":"Remera de Compresión tribal con diseño gótico y oscuro, ideal para entrenar o salir luciendo tu físico y una buena ropa.","listed":true,"stock":true,"images":["compresmorado.jpg","compresmorado1.jpg","compresmorado2.jpg"],"sizes":[{"name":"XS","avail":false},{"name":"S","avail":false},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":true,"file":"tallecompresion.png","sz":{"fit":"contain"}},"reviews":[{"id":"v3ynvn","name":"Lautaro R.","stars":5,"text":"La remera es de muy buena calidad, viene ajustable y no retiene el mal olor.","images":["opinion-1-compresion.jpg"],"sz":{"mw":"","mh":"","dw":250,"dh":250,"fit":"contain"}},{"id":"t196fa","name":"Ricardo B.","stars":5,"text":"el diseño Facherisimo y la calidad exelente, 10/10 se lucieron","images":[]},{"id":"n3cfqt","name":"Dante O.","stars":5,"text":"La remera es muy cómoda y te deja respirar a pesar de ser ajustada.\nes livianita y no larga mal olor, la recomiendo.","images":["opinion-2-compresion.jpg"],"sz":{"dw":250,"dh":250,"fit":"contain"}},{"id":"otjavm","name":"Jorge G.","stars":5,"text":"Me esperaba otra cosa pero la remera superó mis expectativas.","images":["opinion-3-compresion.jpg"]}],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"szCard":{"fit":"contain","dw":0,"dh":0},"szMain":{"dw":"","fit":"contain"},"align":"left","cat":"dezzx6"},{"id":"bjecbf","name":"Remera de Compresión Tribal Negro con Blanco","price":38000,"promo":32000,"desc":"Remera de Compresión tribal con diseño gótico y oscuro, ideal para entrenar o salir luciendo tu físico y una buena ropa.","listed":true,"stock":false,"images":["compresblanco.jpg","compresblanco1.jpg","compresblanco2.jpg"],"sizes":[{"name":"XS","avail":false},{"name":"S","avail":false},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":true,"file":"tallecompresion.png","sz":{"fit":"contain"}},"reviews":[{"id":"nkafyj","name":"Lautaro R.","stars":5,"text":"La remera es de muy buena calidad, viene ajustable y no retiene el mal olor.","images":["opinion-1-compresion.jpg"],"sz":{"mw":"","mh":"","dw":250,"dh":250,"fit":"contain"}},{"id":"b9oe4b","name":"Ricardo B.","stars":5,"text":"el diseño Facherisimo y la calidad exelente, 10/10 se lucieron","images":[]},{"id":"1cgifj","name":"Dante O.","stars":5,"text":"La remera es muy cómoda y te deja respirar a pesar de ser ajustada.\nes livianita y no larga mal olor, la recomiendo.","images":["opinion-2-compresion.jpg"],"sz":{"dw":250,"dh":250,"fit":"contain"}},{"id":"13dj8b","name":"Jorge G.","stars":5,"text":"Me esperaba otra cosa pero la remera superó mis expectativas.","images":["opinion-3-compresion.jpg"]}],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"szCard":{"fit":"contain","dw":0,"dh":0},"szMain":{"dw":"","fit":"contain"},"align":"left","cat":"dezzx6"},{"id":"wqda19","name":"Remera de Compresión Básica BLAZEBORN","price":28000,"promo":25000,"desc":"Remera de Compresión tribal con diseño Básico, iideal para entrenar, salir, o para el día a día.","listed":true,"stock":true,"images":["compresbasico.jpg"],"sizes":[{"name":"XS","avail":false},{"name":"S","avail":false},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":true,"file":"tallecompresion.png","sz":{"fit":"contain"}},"reviews":[{"id":"8ktkdk","name":"Lautaro R.","stars":5,"text":"La remera es de muy buena calidad, viene ajustable y no retiene el mal olor.","images":["opinion-1-compresion.jpg"],"sz":{"mw":"","mh":"","dw":250,"dh":250,"fit":"contain"}},{"id":"4ce3k6","name":"Ricardo B.","stars":5,"text":"el diseño Facherisimo y la calidad exelente, 10/10 se lucieron","images":[]},{"id":"ci6hc4","name":"Dante O.","stars":5,"text":"La remera es muy cómoda y te deja respirar a pesar de ser ajustada.\nes livianita y no larga mal olor, la recomiendo.","images":["opinion-2-compresion.jpg"],"sz":{"dw":250,"dh":250,"fit":"contain"}},{"id":"mt51v1","name":"Jorge G.","stars":5,"text":"Me esperaba otra cosa pero la remera superó mis expectativas.","images":["opinion-3-compresion.jpg"]}],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"szCard":{"fit":"contain","dw":0,"dh":0},"szMain":{"dw":"","fit":"contain"},"align":"left","cat":"dezzx6"},{"id":"upvkpt","name":"Remera de Compresión BERSERK","price":28000,"promo":25000,"desc":"Remera de Compresión tribal con diseño del anime Berserk para aquellos fans que quieran vestir la marca del sacrificio.","listed":true,"stock":true,"images":["berserk.jpg"],"sizes":[{"name":"XS","avail":false},{"name":"S","avail":false},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":true,"file":"tallecompresion.png","sz":{"fit":"contain"}},"reviews":[{"id":"jq5kue","name":"Lautaro R.","stars":5,"text":"La remera es de muy buena calidad, viene ajustable y no retiene el mal olor.","images":["opinion-1-compresion.jpg"],"sz":{"mw":"","mh":"","dw":250,"dh":250,"fit":"contain"}},{"id":"mzy611","name":"Ricardo B.","stars":5,"text":"el diseño Facherisimo y la calidad exelente, 10/10 se lucieron","images":[]},{"id":"nnkvhg","name":"Dante O.","stars":5,"text":"La remera es muy cómoda y te deja respirar a pesar de ser ajustada.\nes livianita y no larga mal olor, la recomiendo.","images":["opinion-2-compresion.jpg"],"sz":{"dw":250,"dh":250,"fit":"contain"}},{"id":"xa4hww","name":"Jorge G.","stars":5,"text":"Me esperaba otra cosa pero la remera superó mis expectativas.","images":["opinion-3-compresion.jpg"]}],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"szCard":{"fit":"contain","dw":0,"dh":0},"szMain":{"dw":"","fit":"contain"},"align":"left","cat":"dezzx6"},{"id":"65rtms","name":"Buzo Tribal Rojo","price":35000,"promo":28000,"desc":"Buzo de algodón con diseños góticos tribales por toda la prenda, ideal para los días de frío y para salir llamando la atención.\nUNISEX.","listed":true,"stock":true,"images":["buzorojo.jpg","buzorojo1.jpg"],"sizes":[{"name":"XS","avail":true},{"name":"S","avail":true},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"lvmmaj","szMain":{"fit":"contain"},"szCard":{"fit":"contain"}},{"id":"wgprqw","name":"Buzo Tribal Morado","price":35000,"promo":28000,"desc":"Buzo de algodón con diseños góticos tribales por toda la prenda, ideal para los días de frío y para salir llamando la atención.\nUNISEX.","listed":true,"stock":true,"images":["buzomorado.jpg","buzomorado1.jpg"],"sizes":[{"name":"XS","avail":true},{"name":"S","avail":true},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"lvmmaj","szCard":{"fit":"contain"},"szMain":{"fit":"contain"}},{"id":"3q7281","name":"Pantalón Tribal Rojo","price":30000,"promo":25000,"desc":"Pantalón recto de algodón con diseños góticos tribales en la pierna izquierda, ideal para los días de frío y para salir llamando la atención.\nUNISEX.","listed":true,"stock":true,"images":["pantrojo.jpg"],"sizes":[{"name":"XS","avail":true},{"name":"S","avail":true},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"42fdj6","szCard":{"fit":"contain"},"szMain":{"fit":"contain"}},{"id":"dn3gck","name":"Pantalón Tribal Morado","price":30000,"promo":25000,"desc":"Pantalón recto de algodón con diseños góticos tribales en la pierna izquierda, ideal para los días de frío y para salir llamando la atención.\nUNISEX.","listed":true,"stock":true,"images":["pantmorado.jpg"],"sizes":[{"name":"XS","avail":true},{"name":"S","avail":true},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"42fdj6","szCard":{"fit":"contain"},"szMain":{"fit":"contain"}},{"id":"yaws0l","name":"Pantalón Básico BLAZEBORN","price":20000,"promo":"","desc":"Pantalón recto de algodón con diseños góticos tribales en la pierna izquierda, ideal para los días de frío y para salir llamando la atención.\nUNISEX.","listed":true,"stock":true,"images":["pantbasico.jpg"],"sizes":[{"name":"XS","avail":true},{"name":"S","avail":true},{"name":"M","avail":true},{"name":"L","avail":false},{"name":"XL","avail":false}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"42fdj6","szCard":{"fit":"contain"},"szMain":{"fit":"contain"}},{"id":"4kddem","name":"Musculosa de Morley","price":20000,"promo":"","desc":"Musculosa de Tirantes de Morley, Elástica, Liviana, ideal para el dia a dia o para el gym y sentirte ligero.","listed":true,"stock":true,"images":["morley.jpg","morley1.jpg","morley2.jpg"],"sizes":[{"name":"S","avail":false},{"name":"M","avail":true},{"name":"L","avail":true},{"name":"XL","avail":true},{"name":"XXL","avail":false}],"guide":{"show":true,"file":"guiamorley.jpg","sz":{"fit":"contain"}},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"c7l5ji","szCard":{"fit":"contain"},"szMain":{"fit":"contain"}},{"id":"56oy7a","name":"Musculosa Oversize BLAZEBORN","price":25000,"promo":"","desc":"Musculosa de Tirantes de Morley, Elástica, Liviana, ideal para el dia a dia o para el gym y sentirte ligero.","listed":true,"stock":false,"images":["producto-1.jpg"],"sizes":[{"name":"M","avail":true},{"name":"L","avail":true},{"name":"XL","avail":true},{"name":"XXL","avail":true}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"c7l5ji"},{"id":"co95ph","name":"Musculosa Oversize Tributo Kevin Levrone","price":25000,"promo":"","desc":"Musculosa de Tirantes de Morley, Elástica, Liviana, ideal para el dia a dia o para el gym y sentirte ligero.","listed":true,"stock":false,"images":["producto-1.jpg"],"sizes":[{"name":"M","avail":true},{"name":"L","avail":true},{"name":"XL","avail":true},{"name":"XXL","avail":true}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"c7l5ji"},{"id":"9e115i","name":"Musculosa Oversize Tributo Mike Mentzer","price":25000,"promo":"","desc":"Musculosa de Tirantes de Morley, Elástica, Liviana, ideal para el dia a dia o para el gym y sentirte ligero.","listed":true,"stock":false,"images":["producto-1.jpg"],"sizes":[{"name":"M","avail":true},{"name":"L","avail":true},{"name":"XL","avail":true},{"name":"XXL","avail":true}],"guide":{"show":false,"file":"guia-detalles.png"},"reviews":[],"colors":{"on":false,"bg":"#ffffff","fg":"#151515","btn":"#e8431f","btnFg":"#ffffff"},"cat":"c7l5ji"}],"pages":[{"id":"home","name":"Inicio","main":true,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"78yn05","type":"text","kind":"h1","align":"center","text":"BLAZEBORN - FITNESS & STREETWEAR"},{"id":"5sdebp","type":"text","kind":"h2","align":"center","text":"PRODUCTOS DESTACADOS:"},{"id":"2p8jsx","type":"window","title":"REMERAS DE COMPRESIÓN","text":"","align":"center"},{"id":"fmm62d","type":"products","title":"","all":false,"ids":["y54r6s","nub200","upvkpt","wqda19"],"align":"left","ord":["y54r6s","nub200","upvkpt","bjecbf","wqda19","65rtms","wgprqw","3q7281","dn3gck","yaws0l","4kddem","56oy7a","co95ph","9e115i"],"st":{"stroke":"auto","strokeC":"#888888","sw":2}},{"id":"32pyi4","type":"window","title":"MUSCULOSAS","text":"","align":"center"},{"id":"k392o5","type":"products","title":"","all":false,"ids":["4kddem"]},{"id":"amsy68","type":"window","title":"BUZOS - PANTALONES - CONJUNTOS","text":"","align":"center"},{"id":"omyvw9","type":"products","title":"","all":false,"ids":["65rtms","wgprqw","3q7281","dn3gck","yaws0l"],"ord":["y54r6s","nub200","bjecbf","wqda19","upvkpt","65rtms","3q7281","wgprqw","dn3gck","yaws0l"]}]},{"id":"jityi7","name":"X","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"rgaajg","type":"text","kind":"p","align":"center","text":"CONTACTO: +54 9 3704509580\n3704509580"}],"align":"center"},{"id":"nir1yt","name":"Preguntas Frecuentes","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"ozf9vj","type":"text","kind":"p","align":"left","text":"¿Los productos tienen cambio?\n\nSI. Todos nuestros productos se pueden cambiar, dentro de los 7 días hábiles posteriores a su compra. Escribinos al +5493704509580 y coordinamos la devolución y nuevo envío 💛 (La cantidad de envíos que se deban abonar, ya sea para que vuelva el producto a nuestra localidad, o el nuevo, a sus casas, corren por cuenta del cliente).\n\n\n¿En cuanto tiempo despachan paquetes? 📦\n\nDentro de las 24hs a 96 hs próximas al ingreso del pago. (Para agilizar este proceso, es super importante que corrobores bien todos los datos que cargas al momento de la compra. Un error en el domicilio por ejemplo, puede atrasar todo)\n\n¿Cuanto demora el envío? 🚀\n\nUna vez despachado el paquete (Por andreani o correo argentino), tardan entre 2 y 5 días hábiles en ser entregados a domicilio/Sucursal. Les enviamos siempre código de seguimiento así pueden ir rastreando su paquete e ir viendo sus movimientos. Esto te facilita saber con exactitud el día que va a llegar.\n\n\n¿Còmo es el funcionamiento de la tienda? 💻\nLa tienda online esta siempre actualizada. Los productos que ves disponibles son los que tienen stock y que podés comprar en cualquier momento.\n\n¿Cuàles son los medios de pago? 💳\n\nLos medios de pago que son aceptados por ahora: Mercado Pago, transferencia bancaria o efectivo si es presencial (Formosa)\n \n¿Cómo puedo saber el estado de mi pedido? 📦\nTodos los pedidos se despachan dentro de las próximas 96 horas hábiles desde que se acredita el pago. Una vez despachado, vas a recibir por correo electrónico tu código de seguimiento para que puedas ver todos los movimientos del envío.\n\nSi todavía no recibiste el seguimiento o necesitás consultar el estado de tu compra, comunicate al +54 9 3704509580, indicando tu número de orden o tu comprobante de pago.\n\nCompré y necesito realizar un cambio de talle 🔄\nPara cambiar tus productos por otro talle o modelo, comunicate al +54 9 3704509580 y envianos la siguiente información:\n\n• Número de orden o comprobante de pago.\n• Foto de los productos que necesitás cambiar.\n• Talle o producto nuevo que te gustaría recibir.\n• Sucursal oficial de Andreani o correo argentino que te resulte más cómoda para realizar el cambio.\n\nUna vez recibida esta información, nuestro equipo te indicará cómo continuar. Tené en cuenta que el proceso de cambio puede demorar entre 3 y 7 días hábiles.\n\nNo sé qué talle pedir 📏\n\nPara elegir el talle ideal, te recomendamos consultar la tabla de talles disponible dentro de la publicación de cada producto en nuestra tienda online.\n\nRecomendaciones de la casa:\n\nEn nuestras remeras de Compresión, recomendamos elegir el talle que usás normalmente. Si preferís que quede más ajustada y compresiva, podés elegir un talle menos.\n\nAnte cualquier duda, comunicate al +54 9 3704509580 y te ayudamos a elegir según tu estatura y peso.\n\n \n\n¿Los productos tienen garantía?\n\nEn BlazeBorn queremos que uses tus productos sin preocupaciones, por eso ofrecemos garantía de por vida para defectos de fabricación. Esto incluye problemas como fallas en las costuras, tela en mal estado o detalles mal terminados.\n\nAhora bien, la garantía no cubre daños por mal uso ni accidentes, como roturas o cualquier otro tipo de manipulación incorrecta. Apostamos a la calidad de nuestros productos, pero el cuidado diario depende de vos 😉\n\nSi llegás a notar un defecto de fábrica, escribinos y lo resolvemos al toque. Estamos a tu disposición.\n\nTel de contacto : +54 9 3704509580"},{"id":"d0x6wp","type":"text","kind":"p","align":"center","text":"CONTACTO: +54 9 3704509580\n3704509580"}],"align":"center"},{"id":"y56t5d","name":"Seguimiento de Envíos","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"mz5o6p","type":"text","kind":"p","align":"left","text":"📦 Información de Envío\nUna vez despachado el producto, recibirás el número de seguimiento de tu paquete en tu email, o por el WhatsApp nuestro. Debes copiar y pegar este número en la página del correo correspondiente.\n\nSe te enviará el link de seguimiento por whatsapp o por mensaje de alguna red social nuestra donde nos contactes\n\n\n📧 Importante: Si no recibes el número de seguimiento, revisa tu carpeta de correo no deseado.\n\n📱 Si aún así no lo encuentras, contáctanos a través de nuestras redes sociales para solicitarlo.\n\n¡Gracias por tu compra! 😊"},{"id":"ujwdft","type":"text","kind":"p","align":"center","text":"CONTACTO: +54 9 3704509580\n3704509580"}],"align":"left"},{"id":"93i0ll","name":"Política de Cambios y Devoluciones","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"umter6","type":"text","kind":"h2","align":"left","text":"📦 Admitimos reembolsos en los siguientes casos:"},{"id":"6n5qqj","type":"text","kind":"p","align":"left","text":"Producto en mal estado (roto, fallado, etc.):\n\nEl cliente No Pagará el envío.\n📸 Envíanos el y una foto del producto en mal estado.\n📱 Contacta a nuestro WhatsApp: +54 9 3704509580\nEl reembolso se realizará una vez que recibamos el producto y verifiquemos su estado. Este proceso puede tomar hasta 3 días hábiles."},{"id":"9f3ket","type":"text","kind":"h2","align":"left","text":"Devoluciones por cualquier motivo:"},{"id":"n1rfg4","type":"text","kind":"p","align":"left","text":"Debe realizarse dentro de los 7 días hábiles desde la recepción del producto.\nEl producto debe estar en las mismas condiciones en que fue recibido, sin usar y en su empaque original.\nEl cliente se hará cargo del costo del primer envío y del segundo envío para enviar el producto.\n📱 Contacta a nuestro WhatsApp: +54 9 3704509580\nEl reembolso se realizará una vez que recibamos el producto y verifiquemos su estado. Este proceso puede tomar hasta 3 días hábiles.\nInstrucciones de envío: Por favor, empaqueta el producto de forma segura. La dirección de envío te la brindaremos una vez que te comuniques con nosotros."},{"id":"6lj360","type":"text","kind":"h2","align":"left","text":"Devoluciones por decisión del consumidor:"},{"id":"bkixf6","type":"text","kind":"p","align":"left","text":"Si no estás satisfecho con tu compra, puedes devolver el producto dentro de las 48 horas posteriores a la recepción del pedido.\nEl producto debe ser enviado en las mismas condiciones en las que fue recibido y el costo de envío corre por cuenta del cliente.\nUna vez que recibamos el producto y verifiquemos su estado, procesaremos el reembolso, que puede tardar hasta 72 horas hábiles en acreditarse."},{"id":"1xdowj","type":"text","kind":"h2","align":"left","text":"🔄 Políticas de Cambios\nAceptamos cambios de productos en los siguientes casos:"},{"id":"nxt6xb","type":"text","kind":"p","align":"left","text":"Inconformidad con el producto (no era como lo imaginabas, no te queda, etc.):\n\n📱 Contacta a nuestro WhatsApp: +54 9 3704509580\n📌 Envíanos el comprobante de pago y una foto del producto que deseas cambiar.\n🚚 Nosotros no nos hacemos cargo del costo del envío del cambio.\nCambios de prendas:\n\nLos cambios de prendas están permitidos dentro de los 7 días posteriores a la recepción del pedido.\nLas prendas deben estar en excelente estado y el envío corre por cuenta del cliente."},{"id":"7uat9r","type":"text","kind":"p","align":"center","text":"\n\nCONTACTO: +54 9 3704509580\n3704509580"}],"align":"center"},{"id":"42fdj6","name":"Pantalones","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"qcnv1a","type":"products","title":"","all":false,"ids":[],"cats":["42fdj6"]},{"id":"awe7um","type":"text","kind":"p","align":"center","text":"CONTACTO: +54 9 3704509580\n3704509580"}],"align":"center"},{"id":"c7l5ji","name":"Musculosas","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"6euqzk","type":"products","title":"","all":false,"ids":[],"cats":["c7l5ji"]},{"id":"6w0ksd","type":"text","kind":"p","align":"center","text":"CONTACTO: +54 9 3704509580\n3704509580"}],"align":"center"},{"id":"dezzx6","name":"Remeras de Compresión","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"qxsuth","type":"products","title":"","all":false,"ids":[],"cats":["dezzx6"]},{"id":"z3yjxf","type":"text","kind":"p","align":"center","text":"CONTACTO: +54 9 3704509580\n3704509580"}],"align":"center"},{"id":"lvmmaj","name":"Buzos","main":false,"style":{"themes":[{"bg":"#fbfaf8","fg":"#151515","card":"#ffffff","accent":"#ff0000","accentFg":"#ffffff","border":"#e3dfd9","barBg":"#151515","barFg":"#ffffff"},{"bg":"#0f0f11","fg":"#f3f3f3","card":"#1b1b1f","accent":"#ff0000","accentFg":"#ffffff","border":"#34343a","barBg":"#11ff00","barFg":"#000000"}],"ui":{"bw":0,"radius":12},"el":{"cart":{"fill":"custom","fillC":"#ff0000"},"menu":{"fill":"none","fillC":"#000000","stroke":"custom","strokeC":"#ffffff","sw":2,"r":12},"btn":{"fill":"custom","fillC":"#00ad0c","stroke":"none"},"badge":{"fill":"custom","fillC":"#00ad23","stroke":"none","r":12},"chip":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":3},"win":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#ff0000","sw":2},"imgblk":{"fill":"auto","fillC":"#1c0703","stroke":"auto","strokeC":"#11ff00","sw":2},"about":{"fill":"none","fillC":"#e8431f"},"modal":{"fill":"none","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"ckbox":{"fill":"auto","fillC":"#e8431f"},"drawer":{"fill":"auto","fillC":"#e8431f"},"btn2":{"fill":"auto","fillC":"#e8431f","stroke":"custom","strokeC":"#888888","sw":2},"qty":{"r":""}}},"blocks":[{"id":"9vysox","type":"products","title":"","all":false,"ids":[],"cats":["lvmmaj"]},{"id":"4opz0i","type":"text","kind":"p","align":"center","text":"CONTACTO: +54 9 3704509580\n3704509580"}],"align":"center"}],"icons":{"cart":{"file":"carrito.png","sz":{}},"whatsapp":{"file":"wsp.png","sz":{}}},"btns":{"buy":{"t":"Comprar ya","fill":"auto","txt":"auto","fillC":"#e8431f"},"add":{"t":"Agregar al carrito","fill":"auto","txt":"custom","txtC":"#ffffff"},"guide":{"t":"Guía de Talles","fill":"auto","txt":"custom","txtC":"#ffffff"},"soldout":{"t":"Sin stock","fill":"auto","txt":"auto"},"cartbuy":{"t":"Comprar ya","fill":"auto","txt":"auto"},"clear":{"t":"Vaciar carrito","fill":"auto","txt":"auto"},"redeem":{"t":"Canjear","fill":"auto","txt":"auto"},"unship":{"t":"Cambiar medio de envío","fill":"auto","txt":"auto"},"final":{"t":"Comprar ya","fill":"auto","txt":"auto"},"excl":{"t":"Si eres de {localidad}, coordina el envío por WhatsApp","fill":"auto","txt":"auto"}},"badges":{"offer":{"t":"!OFERTA¡","show":true,"fill":"auto","stroke":"auto","txt":"auto"},"soldout":{"t":"!AGOTADO¡","show":true,"fill":"custom","stroke":"auto","txt":"auto","fillC":"#e8431f"},"avail":{"t":"Disponible","show":false,"fill":"auto","stroke":"auto","txt":"auto"}},"nav":{"tree":true,"items":[{"id":"84uaw9","label":"PRODUCTOS","page":"","children":[{"id":"erleum","label":"Remeras de Compresión","page":"dezzx6","children":[]},{"id":"a6kso8","label":"Buzos","page":"lvmmaj","children":[]},{"id":"5opjq2","label":"Pantalones","page":"42fdj6","children":[]},{"id":"2iz52m","label":"Musculosas","page":"c7l5ji","children":[]}]},{"id":"tulyvm","label":"Políticas de Cambios y Devoluciones","page":"93i0ll","children":[]},{"id":"8b8euk","label":"Seguimiento de Envíos","page":"y56t5d","children":[]},{"id":"4uqd6i","label":"Preguntas Frecuentes","page":"nir1yt","children":[]}]},"ckst":{"ship":{"cm":"custom","c":"#1eff00"}}}</script>
+<script>
+
+(function(){
+var D=JSON.parse(document.getElementById('store-data').textContent);
+var PV=window.__PREVIEW||null;
+var LOCAL=(PV&&PV.local)||{};
+var PH='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#999" fill-opacity=".18"/><text x="200" y="208" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#888">Sin imagen</text></svg>');
+window.__PH=PH;
+var PROVS=['Buenos Aires','Ciudad Autónoma de Buenos Aires','Catamarca','Chaco','Chubut','Córdoba','Corrientes','Entre Ríos','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquén','Río Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucumán'];
+var KEY='tienda_'+String(D.store.name||'x');
+var st={page:(PV&&PV.page)||D.pages[0].id,theme:PV?(PV.theme||0):(Number(D.defaultTheme)||0),cart:[]};
+var layer,ck=null,pm=null,navStack=[];
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function nl(s){return esc(s).replace(/\n/g,'<br>')}
+function norm(s){return String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
+function $(s,r){return (r||document).querySelector(s)}
+function src(n){return LOCAL[n]||n}
+function ta(v,d){var x=String(v||d||'left');return 'text-align:'+(['left','center','right','justify'].indexOf(x)>=0?x:'left')+';'}
+function num(v){return v!==''&&v!=null&&Number(v)>0}
+function szs(z,px){z=z||{};var u=px?'px':'%',o='';
+ if(num(z.dw))o+='--dw:'+Number(z.dw)+u+';';
+ if(num(z.dh))o+='--dh:'+Number(z.dh)+'px;';
+ if(num(z.mw))o+='--mw:'+Number(z.mw)+u+';';
+ if(num(z.mh))o+='--mh:'+Number(z.mh)+'px;';
+ if(z.fit==='contain')o+='--fit:contain;';
+ return o}
+var FB={menu:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>',cart:'🛒',whatsapp:'<svg width="32" height="32" viewBox="0 0 24 24"><path fill="#fff" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5z"/><path fill="#25d366" d="M8.6 7.6c-.3 0-.6.1-.8.5-.3.5-.6 1.2-.1 2.3.9 2 2.2 3.4 4.2 4.4 1.4.7 2.2.6 2.8.3.5-.3.9-.8 1-1.2.1-.3 0-.5-.2-.6l-1.6-.8c-.2-.1-.5-.1-.6.1l-.6.8c-.1.2-.3.2-.5.1-1-.5-1.9-1.3-2.4-2.3-.1-.2-.1-.4 0-.5l.5-.6c.1-.2.1-.4 0-.6l-.7-1.6c-.1-.3-.3-.4-.5-.4z"/></svg>',close:'✕'};
+window.__ic=function(el,k){el.onerror=null;el.outerHTML=FB[k]};
+function icon(k){var c=(D.icons&&D.icons[k])||{};if(!c.file)return FB[k];return '<img class="ic ic-'+k+'" style="'+esc(szs(c.sz,true))+'" src="'+esc(src(c.file))+'" alt="" onerror="window.__ic(this,\''+k+'\')">'}
+function img(n,alt,cls,sty){return '<img'+(cls?' class="'+cls+'"':'')+(sty?' style="'+esc(sty)+'"':'')+' src="'+esc(src(n))+'" alt="'+esc(alt||'')+'" onerror="this.onerror=null;this.src=window.__PH">'}
+function fmt(n){n=Number(n)||0;var ars=D.store.currency==='ARS';return (ars?'$ ':'US$ ')+n.toLocaleString(ars?'es-AR':'en-US',{minimumFractionDigits:0,maximumFractionDigits:2})}
+function P(id){return D.products.filter(function(p){return p.id===id})[0]}
+function curPage(){return D.pages.filter(function(p){return p.id===st.page})[0]||D.pages[0]}
+function sizeList(p){var s=p.sizes;if(typeof s==='string')s=s.split(',').map(function(t){return {name:t.trim(),avail:true}});return Array.isArray(s)?s.filter(function(x){return x&&String(x.name).trim()}).map(function(x){return {name:String(x.name).trim(),avail:x.avail!==false}}):[]}
+function sizesOf(p){return sizeList(p).filter(function(x){return x.avail}).map(function(x){return x.name})}
+function soldOut(p){var l=sizeList(p);return !p.stock||(l.length>0&&!sizesOf(p).length)}
+function jc(v){return v==='center'?'center':(v==='right'?'flex-end':'flex-start')}
+function hasPromo(p){return p.promo!==''&&p.promo!=null&&Number(p.promo)>0}
+function eff(p){return hasPromo(p)?Number(p.promo):(Number(p.price)||0)}
+function priceHTML(p){return hasPromo(p)?'<s class="old">'+fmt(p.price)+'</s><b class="now">'+fmt(p.promo)+'</b>':'<b class="now">'+fmt(p.price)+'</b>'}
+function waNum(){return String(D.store.whatsapp||'').split('?')[0].replace(/\D/g,'')}
+function toast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},1800)}
+function notify(){if(PV&&window.parent!==window)window.parent.postMessage({tienda:1,page:st.page,theme:st.theme},'*')}
+function persist(){if(PV)return;try{localStorage.setItem(KEY,JSON.stringify({cart:st.cart,theme:st.theme}))}catch(e){}}
+function load(){if(PV)return;try{var o=JSON.parse(localStorage.getItem(KEY)||'{}');if(o.cart)st.cart=o.cart.filter(function(c){return P(c.id)});if(o.theme!=null&&D.themeMode!=='single')st.theme=o.theme}catch(e){}}
+
+var EL={cart:'.round',whatsapp:'.wa',menu:'.hdr .ib:not(.round)',close:'.x',btn:'.btn:not(.ghost)',btn2:'.btn.ghost',card:'.pcard',win:'.win',imgblk:'.imgblk',chip:'.chip:not(.on)',rev:'.rev',input:'.in,.fi input,.fi textarea',bar:'.bar',header:'.hdr',drawer:'.drawer',modal:'.dlg',ckbox:'.ckw>section',ship:'.sm,.opt',badge:'.badge',arw:'.arw',about:'.about',qty:'.qty button',sw:'.sw'};
+var BD={buy:'Comprar ya',add:'Agregar al carrito',guide:'Guía de detalles',soldout:'Sin stock',cartbuy:'Comprar ya',clear:'Vaciar carrito',redeem:'Canjear',unship:'Cambiar medio de envío',final:'Comprar ya',excl:'Si eres de {localidad}, coordina el envío por WhatsApp'};
+function bt(k){var t=(D.btns&&D.btns[k]&&String(D.btns[k].t||'').trim())||BD[k];return esc(t.split('{localidad}').join(D.excl?D.excl.city:''))}
+var CL='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',CR='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+function car(p,extra,sty){return '<div class="car'+extra+'" data-i="0" data-n="'+p.images.length+'"'+(sty?' style="'+esc(sty)+'"':'')+'><div class="trk">'+p.images.map(function(f){return img(f,p.name,'cimg')}).join('')+'</div><button class="arw l" data-a="prev" aria-label="Imagen anterior">'+CL+'</button><button class="arw r" data-a="next" aria-label="Imagen siguiente">'+CR+'</button></div>'}
+function slideTo(c,i){var n=+c.dataset.n;i=((i%n)+n)%n;c.dataset.i=i;c.querySelector('.trk').style.transform='translateX(-'+(i*100)+'%)';
+ if(c.classList.contains('gcar')){if(pm)pm.idx=i;Array.prototype.forEach.call(document.querySelectorAll('#pm .th img'),function(im,k){im.classList.toggle('on',k===i)})}}
+var BDD={offer:'Oferta',soldout:'Sin stock',avail:'Disponible'};
+function bdg(k,cls){var b=(D.badges||{})[k]||{};return '<span class="badge '+cls+'" data-bd="'+k+'">'+esc(String(b.t||'').trim()||BDD[k])+'</span>'}
+function hasN(v){return v!==''&&v!=null&&!isNaN(Number(v))}
+function txd(t,im,nc){t=t||{};var o=[],c,x=im?'!important':'';
+ if(Number(t.w)>0)o.push('font-weight:'+Number(t.w)+x);
+ if(t.i)o.push('font-style:italic'+x);
+ if(t.u)o.push('text-decoration:underline'+x);
+ if(hasN(t.ls)&&Number(t.ls)!==0)o.push('letter-spacing:'+Number(t.ls)+'px'+x);
+ if(!nc&&t.cm==='custom'&&(c=col(t.c)))o.push('color:'+c+x);
+ return o.length?o.join(';')+';':''}
+function txs(t,nc){t=t||{};var o=txd(t,false,nc);if(num(t.fs))o+='--tfs:'+Number(t.fs)+'px;';if(num(t.fm))o+='--tfm:'+Number(t.fm)+'px;';return o}
+function txRule(sel,t,nc){t=t||{};var d=txd(t,true,nc),out='';
+ if(d||num(t.fs))out+=sel+'{'+d+(num(t.fs)?'font-size:'+Number(t.fs)+'px!important;':'')+'}\n';
+ if(num(t.fm))out+='@media(max-width:700px){'+sel+'{font-size:'+Number(t.fm)+'px!important}}\n';
+ return out}
+function bx(o,pad,nob){o=o||{};var r='',c;
+ if(o.fill==='none')r+='background:transparent!important;';else if(o.fill==='custom'&&(c=col(o.fillC)))r+='background:'+c+'!important;';
+ if(!nob){if(o.stroke==='none')r+='border:0!important;';else if(o.stroke==='custom'&&(c=col(o.strokeC)))r+='border:'+(Number(o.sw)>0?Number(o.sw):2)+'px solid '+c+'!important;'}
+ if(hasN(o.r))r+='border-radius:'+Math.max(0,Number(o.r))+'px!important;';
+ if(pad&&(o.fill==='custom'||(!nob&&o.stroke==='custom')))r+='padding:12px 16px!important;';
+ return r}
+function bk(k){return ' data-bk="'+k+'"'}
+function col(v){return /^#[0-9a-f]{3,8}$/i.test(String(v))?v:null}
+function applyEl(){
+ var ex=(curPage().style.el)||{},css='';
+ Object.keys(EL).forEach(function(k){
+  var e=ex[k];if(!e)return;var r='',c;
+  if(e.fill==='none')r+='background:transparent!important;';
+  else if(e.fill==='custom'&&(c=col(e.fillC)))r+='background:'+c+'!important;';
+  if(e.stroke==='none')r+='border:0!important;';
+  else if(e.stroke==='custom'&&(c=col(e.strokeC)))r+='border:'+(Number(e.sw)>0?Number(e.sw):2)+'px solid '+c+'!important;';
+  if(e.r!==''&&e.r!=null&&!isNaN(Number(e.r)))r+='border-radius:'+Math.max(0,Number(e.r))+'px!important;';
+  if(r)css+=EL[k]+'{'+r+'}\n';
+ });
+ Object.keys(BD).forEach(function(k){var b=(D.btns||{})[k];if(!b)return;var r='',c;
+  if(b.fill==='custom'&&(c=col(b.fillC)))r+='background:'+c+'!important;border-color:'+c+'!important;';
+  if(b.txt==='custom'&&(c=col(b.txtC)))r+='color:'+c+'!important;';
+  if(r)css+='button[data-bk="'+k+'"][data-bk="'+k+'"]{'+r+'}\n';
+ });
+ Object.keys(BDD).forEach(function(k){var b=(D.badges||{})[k];if(!b)return;var r='',c;
+  if(b.fill==='none')r+='background:transparent!important;';else if(b.fill==='custom'&&(c=col(b.fillC)))r+='background:'+c+'!important;';
+  if(b.stroke==='none')r+='border:0!important;';else if(b.stroke==='custom'&&(c=col(b.strokeC)))r+='border:'+(Number(b.sw)>0?Number(b.sw):2)+'px solid '+c+'!important;';
+  if(b.txt==='custom'&&(c=col(b.txtC)))r+='color:'+c+'!important;';
+  if(r)css+='.badge[data-bd="'+k+'"]{'+r+'}\n';
+ });
+ css+=txRule('.brand span',D.store.tx)+txRule('.bar',D.bar.tx)+txRule('#mm .nav,#mm .lbl',D.menu.tx);
+ var CKT={sub:'.ck .r-sub',disc:'.ck .r-disc',ship:'.ck .r-ship',free:'.ck .free',tot:'.ck .r-tot',title:'.ckh h2',sec:'.ckw h3',lab:'.fi>span',item:'.ck .cin b',price:'.ck .cs',msg:'.ck .msg'};
+ Object.keys(CKT).forEach(function(k){if(D.ckst&&D.ckst[k])css+=txRule(CKT[k],D.ckst[k])});
+ Object.keys(BD).forEach(function(k){var b=(D.btns||{})[k];if(b&&b.tx)css+=txRule('button[data-bk="'+k+'"][data-bk="'+k+'"]',b.tx,true)});
+ Object.keys(BDD).forEach(function(k){var b=(D.badges||{})[k];if(b&&b.tx)css+=txRule('.badge[data-bd="'+k+'"]',b.tx,true)});
+ var el=document.getElementById('elst');
+ if(!el){el=document.createElement('style');el.id='elst';document.head.appendChild(el)}
+ el.textContent=css;
+}
+function applyTheme(){
+ var pg=curPage(),ts=pg.style.themes,t=ts[st.theme]||ts[0],u=pg.style.ui||{},r=document.documentElement.style;
+ ['bg','fg','card','accent','accentFg','border','barBg','barFg'].forEach(function(k){r.setProperty('--'+k,t[k])});
+ r.setProperty('--bw',(u.bw||0)+'px');r.setProperty('--r',(u.radius||0)+'px');
+ document.title=D.store.name+(pg.main?'':' · '+pg.name);
+ applyEl();
+}
+
+function shell(){
+ var s=D.store;
+ document.getElementById('app').innerHTML=
+ '<div id="top"><div id="bar" class="bar"></div><header class="hdr">'+
+ '<button class="ib" data-a="menu" aria-label="Abrir menú">'+FB.menu+'</button>'+
+ '<button class="brand" data-a="home">'+(s.cover?img(s.cover,s.name,'',szs(s.iconSz,true)):'')+'<span>'+esc(s.name)+'</span></button>'+
+ '<button class="ib round" data-a="cartopen" aria-label="Carrito">'+icon('cart')+'<i id="cc"></i></button></header></div>'+
+ '<main id="main"></main>'+
+ '<a class="wa" id="wa" target="_blank" rel="noopener" aria-label="WhatsApp">'+icon('whatsapp')+'</a>'+
+ '<div id="layer"></div>';
+ layer=$('#layer');
+ $('#wa').href='https://wa.me/'+waNum();
+}
+
+function renderBar(){
+ var b=D.bar,el=$('#bar');
+ if(!b.enabled){el.style.display='none';return}
+ el.style.display='';
+ var t=esc(b.text||'Envío gratis')+' a partir de '+(b.mode==='units'?(Number(b.units)+(Number(b.units)===1?' unidad':' unidades')):fmt(b.amount));
+ var g='<span class="grp">'+('<span>'+t+'</span>').repeat(8)+'</span>';
+ el.innerHTML='<div class="track">'+g+g+'</div>';
+}
+
+function card(p){
+ var o=soldOut(p),c=p.colors||{};
+ var sty=(c.on?'--pbg:'+c.bg+';--pfg:'+c.fg+';--pbtn:'+c.btn+';--pbtnfg:'+c.btnFg+';':'')+bx(p.st,true);sty=sty?' style="'+esc(sty)+'"':'';
+ return '<article class="pcard box"'+sty+'><div class="pimg" style="'+esc(szs(p.szCard))+'" data-a="open" data-id="'+p.id+'">'+(p.images.length>1?car(p,''):img(p.images[0],p.name))+(o?bdg('soldout','off'):(hasPromo(p)?bdg('offer',''):''))+(!o&&D.badges&&D.badges.avail&&D.badges.avail.show?bdg('avail','av'):'')+'</div>'+
+ '<div class="pinfo" style="'+ta(p.align)+'"><h3 style="'+txs(p.tx)+'">'+esc(p.name)+'</h3><div class="price" style="'+txs(p.txp)+'">'+priceHTML(p)+'</div></div>'+
+ '<div class="pbtns"><button class="btn" data-a="buy"'+bk('buy')+' data-id="'+p.id+'"'+(o?' disabled':'')+'>'+bt('buy')+'</button>'+
+ '<button class="btn ghost" data-a="add"'+bk('add')+' data-id="'+p.id+'"'+(o?' disabled':'')+'>'+bt('add')+'</button></div></article>';
+}
+
+function ckey(p){return D.pages.some(function(x,i){return i>0&&x.id===p.cat})?p.cat:''}
+function ordered(b){var ids=D.products.map(function(p){return p.id}),o=(b.ord||[]).filter(function(i){return ids.indexOf(i)>=0});ids.forEach(function(i){if(o.indexOf(i)<0)o.push(i)});return o.map(P)}
+function block(b){
+ if(b.type==='text'){
+  var k=b.kind==='h1'?'<h2 class="t1"':(b.kind==='h2'?'<h3 class="t2"':'<p class="ptxt"');
+  var e=b.kind==='h1'?'</h2>':(b.kind==='h2'?'</h3>':'</p>');
+  return '<div class="blk" style="text-align:'+esc(b.align||'left')+';'+esc(bx(b.st,true))+'">'+k+' style="'+txs(b.tx)+'">'+nl(b.text)+e+'</div>';
+ }
+ if(b.type==='image')return '<figure class="blk imgblk box" style="margin-left:0;margin-right:0;'+esc(bx(b.st))+'">'+img(b.file,b.caption,'',szs(b.sz))+(b.caption?'<figcaption style="'+ta(b.capAlign)+txs(b.tx)+'">'+esc(b.caption)+'</figcaption>':'')+'</figure>';
+ if(b.type==='window')return '<section class="blk win box" style="'+ta(b.align)+esc(bx(b.st,true))+'"><h3 style="'+txs(b.tx2)+'">'+esc(b.title)+'</h3><p style="'+txs(b.tx)+'">'+nl(b.text)+'</p></section>';
+ if(b.type==='products'){
+  var L=ordered(b).filter(function(p){return p.listed&&(b.all||(b.ids||[]).indexOf(p.id)>=0||(b.asg&&p.cat===st.page)||(b.cats||[]).indexOf(ckey(p))>=0)});
+  return '<section class="blk" style="'+esc(bx(b.st,true))+'">'+(b.title?'<h2 class="sech" style="'+ta(b.align)+txs(b.tx2)+'">'+esc(b.title)+'</h2>':'')+(L.length?'<div class="grid">'+L.map(card).join('')+'</div>':'<p class="empty">No hay productos para mostrar.</p>')+'</section>';
+ }
+ return '';
+}
+
+function renderMain(){
+ var pg=curPage(),h='';
+ if(pg.main){if(D.store.showCover&&D.store.cover)h+='<section class="cover">'+img(D.store.cover,D.store.name,'',szs(D.store.coverSz))+'</section>'}
+ else h+='<h1 class="ptitle" style="'+ta(pg.align)+txs(pg.tx)+'">'+esc(pg.name)+'</h1>';
+ h+='<div class="wrap">'+pg.blocks.map(block).join('');
+ if(!pg.blocks.length)h+='<p class="empty">Esta página todavía no tiene contenido.</p>';
+ if(pg.main&&D.about&&D.about.enabled){
+  var ai=D.about.imgOn?img(D.about.img,D.about.title,'aimg',szs(D.about.sz)):'';
+  h+='<section class="about" style="'+ta(D.about.align)+esc(bx(D.about.st,true))+'">'+(D.about.imgPos==='before'?ai:'')+'<h2 style="'+txs(D.about.tx2)+'">'+esc(D.about.title)+'</h2><p style="'+txs(D.about.tx)+'">'+nl(D.about.text)+'</p>'+(D.about.imgPos==='before'?'':ai)+'</section>';
+ }
+ h+='</div>';
+ var f=D.footer;
+ if(f&&f.enabled)h+='<footer class="foot" style="border-top-color:'+esc(f.lineColor)+';'+ta(f.align,'center')+esc(bx(f.st,true,true))+'"><span style="'+txs(f.tx)+'">© '+(f.year?esc(f.year)+' ':'')+esc(D.store.name)+'. '+esc(f.text)+'</span></footer>';
+ $('#main').innerHTML=h;
+}
+
+function go(id){st.page=id;navStack=[];closeL('mm');applyTheme();renderMain();window.scrollTo(0,0);notify()}
+
+function lock(){document.body.style.overflow=layer.children.length?'hidden':''}
+function mount(html,id){closeL(id);var d=document.createElement('div');d.innerHTML=html;var el=d.firstElementChild;layer.appendChild(el);lock();requestAnimationFrame(function(){el.classList.add('in')});return el}
+function closeL(id){var el=document.getElementById(id);if(el){el.remove();lock()}}
+
+/* ---------- Menú ---------- */
+function menuRoot(){
+ var subs=D.pages.filter(function(p){return !p.main}),main=D.pages[0],h='<div class="dh"><h3>Menú</h3><button class="x" data-a="close" data-t="mm" aria-label="Cerrar">'+FB.close+'</button></div><div class="dbody">';
+ if(D.menu.search)h+='<div class="msec"><div class="lbl">Buscar productos</div><input id="q" class="in" type="search" placeholder="Escribí para buscar…" autocomplete="off"><div id="qres"></div></div>';
+ h+='<nav class="msec"><button class="nav" data-a="go" data-p="'+esc(main.id)+'">'+esc(D.menu.homeLabel||'Inicio')+'</button>';
+ if(D.nav&&D.nav.tree&&D.nav.items.length){h+='<div class="lbl" style="margin-top:14px">'+esc(D.menu.subLabel||'Categorías')+'</div>'+navBtns(D.nav.items)}
+ else if(D.menu.subpages&&subs.length){h+='<div class="lbl" style="margin-top:14px">'+esc(D.menu.subLabel||'Categorías')+'</div>'+subs.map(function(p){return '<button class="nav" data-a="go" data-p="'+esc(p.id)+'">'+esc(p.name)+'</button>'}).join('')}
+ h+='</nav>';
+ if(D.menu.themes&&D.themeMode!=='single')h+='<div class="msec"><div class="lbl">Tema</div><div class="swr"><span class="'+(st.theme?'':'on')+'" id="tn0">'+esc(D.themeNames[0])+'</span><button class="sw'+(st.theme?' r':'')+'" id="sw" role="switch" aria-checked="'+(st.theme?'true':'false')+'" data-a="theme"><i></i></button><span class="'+(st.theme?'on':'')+'" id="tn1">'+esc(D.themeNames[1])+'</span></div></div>';
+ h+='</div>';
+ return h;
+}
+function navFind(items,id){for(var i=0;i<items.length;i++){var n=items[i];if(n.id===id)return n;var f=navFind(n.children||[],id);if(f)return f}return null}
+function navBtns(items){return items.map(function(n){var k=(n.children||[]).length;return '<button class="nav" data-a="'+(k?'navopen':'navgo')+'" data-id="'+esc(n.id)+'" data-p="'+esc(n.page||'')+'"'+(!k&&!n.page?' disabled':'')+'><span>'+esc(n.label)+'</span>'+(k?'<span class="chev">›</span>':'')+'</button>'}).join('')}
+function renderSub(){var el=$('#mm .drawer');if(!el)return;var n=navFind(D.nav.items,navStack[navStack.length-1]);if(!n){navStack=[];el.innerHTML=menuRoot();return}
+ el.innerHTML='<div class="dh"><button class="back" data-a="navback"><span>‹</span> Volver atrás</button><button class="x" data-a="close" data-t="mm" aria-label="Cerrar">'+FB.close+'</button></div><div class="dbody sub-in"><div class="lbl">'+esc(n.label)+'</div>'+(n.page?'<button class="nav" data-a="navgo" data-p="'+esc(n.page)+'"><span>Ver '+esc(n.label)+'</span></button>':'')+navBtns(n.children||[])+'</div>'}
+function openMenu(){navStack=[];mount('<div class="ov" id="mm"><aside class="drawer">'+menuRoot()+'</aside></div>','mm')}
+function renderQ(v){
+ var q=norm(v),el=$('#qres');if(!el)return;
+ if(!q){el.innerHTML='';return}
+ var r=D.products.filter(function(p){return p.listed&&norm(p.name).indexOf(q)>=0}).slice(0,6);
+ el.innerHTML=r.length?r.map(function(p){return '<button class="sr" data-a="open" data-id="'+p.id+'">'+img(p.images[0],p.name)+'<span><b>'+esc(p.name)+'</b><small>'+priceHTML(p)+'</small></span></button>'}).join(''):'<p class="empty">Sin resultados</p>';
+}
+
+/* ---------- Producto ---------- */
+function openProduct(id,hint){
+ var p=P(id);if(!p)return;
+ var sz=sizesOf(p),sl=sizeList(p),o=soldOut(p);
+ pm={id:id,idx:0,size:sz.length===1?sz[0]:null};
+ var h='<div class="ov mod" id="pm"><div class="dlg box"><button class="x" data-a="close" data-t="pm" aria-label="Cerrar">'+FB.close+'</button><div class="pmg"><div class="gal">'+(p.images.length>1?car(p,' gcar',szs(p.szMain)):img(p.images[0],p.name,'main',szs(p.szMain)))+''+
+ (p.images.length>1?'<div class="th">'+p.images.map(function(n,i){return '<img class="'+(i?'':'on')+'" data-a="thumb" data-i="'+i+'" src="'+esc(src(n))+'" alt="" onerror="this.onerror=null;this.src=window.__PH">'}).join('')+'</div>':'')+
+ '</div><div class="pmi" style="'+ta(p.align)+'"><h2 style="'+txs(p.tx)+'">'+esc(p.name)+'</h2><div class="price big" style="'+txs(p.txp)+'">'+priceHTML(p)+'</div>'+(p.desc?'<p style="'+txs(p.tx2)+'">'+nl(p.desc)+'</p>':'')+
+ (sl.length?'<div class="lbl">Talle</div><div class="chips" style="justify-content:'+jc(p.align)+'">'+sl.map(function(z){return z.avail?'<button class="chip'+(pm.size===z.name?' on':'')+'" data-a="size" data-s="'+esc(z.name)+'">'+esc(z.name)+'</button>':'<button class="chip off" disabled aria-disabled="true" title="No disponible">'+esc(z.name)+'</button>'}).join('')+'</div>':'')+
+ '<div class="err" id="pmerr">'+esc(hint||'')+'</div>'+
+ (p.guide&&p.guide.show?'<button class="btn ghost" data-a="guide"'+bk('guide')+' data-id="'+p.id+'">'+bt('guide')+'</button>':'')+
+ '<button class="btn" data-a="pbuy"'+bk(o?'soldout':'buy')+(o?' disabled':'')+'>'+(o?bt('soldout'):bt('buy'))+'</button>'+
+ '<button class="btn ghost" data-a="padd"'+bk('add')+(o?' disabled':'')+'>'+bt('add')+'</button></div></div>';
+ if(p.reviews&&p.reviews.length){
+  h+='<section class="revs"><h3>Opiniones</h3><div class="rl">'+p.reviews.map(function(r){var n=Math.max(0,Math.min(5,Number(r.stars)||5));
+   return '<div class="rev box" style="'+esc(bx(r.st))+'"><div class="top"><div class="av"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" opacity=".45"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 21c0-4.6 3.8-7.5 8.5-7.5s8.5 2.9 8.5 7.5z"/></svg></div><div><b style="'+txs(r.tx2)+'">'+esc(r.name)+'</b><div class="stars">'+'★'.repeat(n)+'☆'.repeat(5-n)+'</div></div></div><p style="'+ta(r.align)+txs(r.tx)+'">'+nl(r.text)+'</p>'+(r.images&&r.images.length?'<div class="rimgs">'+r.images.map(function(f){return img(f,'','rimg',szs(r.sz,true)).replace('<img','<img data-a="zoom" data-f="'+esc(f)+'"')}).join('')+'</div>':'')+'</div>'}).join('')+'</div></section>';
+ }
+ h+='</div></div>';
+ mount(h,'pm');
+}
+function showImg(i){var c=$('#pm .car');if(c)slideTo(c,i)}
+function ensureSize(){var p=P(pm.id);if(sizesOf(p).length&&!pm.size){$('#pmerr').textContent='Elegí un talle para continuar.';return false}return true}
+function openGuide(id){var p=P(id);mount('<div class="ov mod" id="gm"><div class="dlg box guide"><button class="x" data-a="close" data-t="gm" aria-label="Cerrar">'+FB.close+'</button>'+img(p.guide.file,'Guía de detalles','gimg',szs(p.guide.sz))+'</div></div>','gm')}
+function quick(id,mode){
+ var p=P(id),sz=sizesOf(p);
+ if(sz.length>1){openProduct(id,'Elegí un talle para continuar.');return}
+ var size=sz[0]||'';
+ if(mode==='buy')openCheckout([{id:id,size:size,qty:1}]);else addCart(id,size,1);
+}
+
+/* ---------- Carrito ---------- */
+function addCart(id,size,q){
+ var it=st.cart.filter(function(c){return c.id===id&&c.size===size})[0];
+ if(it)it.qty=Math.min(99,it.qty+q);else st.cart.push({id:id,size:size,qty:q});
+ persist();updCount();toast('Agregado al carrito');if($('#cm'))renderCart();
+}
+function updCount(){var n=st.cart.reduce(function(a,c){return a+c.qty},0);$('#cc').textContent=n||''}
+function lines(items){return items.map(function(c){return {p:P(c.id),c:c}}).filter(function(x){return x.p})}
+function openCart(){closeL('mm');mount('<div class="ov r" id="cm"><aside class="drawer"></aside></div>','cm');renderCart()}
+function renderCart(){
+ var el=$('#cm .drawer');if(!el)return;
+ st.cart=st.cart.filter(function(c){return P(c.id)});
+ var tot=0;
+ var body=st.cart.length?st.cart.map(function(c,i){var p=P(c.id),sub=eff(p)*c.qty;tot+=sub;
+  return '<div class="ci">'+img(p.images[0],p.name)+'<div class="cin"><b>'+esc(p.name)+'</b>'+(c.size?'<small>Talle: '+esc(c.size)+'</small>':'')+'<small>'+fmt(eff(p))+' c/u</small><div class="qty"><button data-a="dec" data-i="'+i+'" aria-label="Quitar uno">−</button><span>'+c.qty+'</span><button data-a="inc" data-i="'+i+'" aria-label="Agregar uno">+</button></div></div><div class="cs">'+fmt(sub)+'</div></div>'}).join(''):'<p class="empty">Tu carrito está vacío.</p>';
+ el.innerHTML='<div class="dh"><h3>Carrito</h3><button class="x" data-a="close" data-t="cm" aria-label="Cerrar">'+FB.close+'</button></div><div class="dbody">'+body+'</div>'+
+ (st.cart.length?'<div class="df"><div class="row tot"><span>Total estimado</span><span>'+fmt(tot)+'</span></div><p class="note">Es un estimado: no incluye el costo de envío.</p><button class="btn" data-a="cartbuy"'+bk('cartbuy')+'>'+bt('cartbuy')+'</button><button class="lnk" data-a="clear"'+bk('clear')+'>'+bt('clear')+'</button></div>':'');
+}
+
+/* ---------- Checkout ---------- */
+var EXF=['name','province','city','phone','notes'];
+function exclMatch(){var e=D.excl,d=ck.data;return !!(e&&e.enabled&&norm(d.province)&&norm(d.province)===norm(e.province)&&norm(d.city)===norm(e.city))}
+function g(k){return String(ck.data[k]||'').trim()}
+function valid(ex){
+ var req=ex?['name','province','city','phone']:['name','province','city','dni','zip','address','email','phone'];
+ for(var i=0;i<req.length;i++)if(!g(req[i]))return false;
+ if(g('phone').replace(/\D/g,'').length<6)return false;
+ if(!ex){if(!/^\S+@\S+\.\S+$/.test(g('email')))return false;if(g('dni').replace(/\D/g,'').length<6)return false}
+ return true;
+}
+function calc(){
+ var L=lines(ck.items),sub=0,units=0;
+ L.forEach(function(x){sub+=eff(x.p)*x.c.qty;units+=x.c.qty});
+ var disc=Math.round(sub*ck.pct)/100;
+ var free=D.bar.enabled&&(D.bar.mode==='units'?units>=Number(D.bar.units):sub>=Number(D.bar.amount));
+ var ship=0,m=null;
+ if(ck.ship&&ck.opt){m=D.ships.filter(function(s){return s.id===ck.ship})[0];ship=free?0:(m?Number(m[ck.opt])||0:0)}
+ return {L:L,sub:sub,disc:disc,ship:ship,free:free,m:m,total:sub-disc+ship};
+}
+function openCheckout(items){
+ if(!lines(items).length)return;
+ closeL('cm');closeL('pm');closeL('mm');
+ ck={items:items,code:null,pct:0,ship:null,opt:null,data:{}};
+ var F=[['name','Nombre completo','Mario González','text'],['province','Provincia','Santa Fe','text'],['city','Localidad','Rosario','text'],['dni','Número de DNI','30123456','text'],['zip','Código postal','2000','text'],['address','Dirección','Av. San Martín 1234','text'],['email','Correo electrónico','mario@gmail.com','email'],['phone','Número de teléfono','3704123456','tel']];
+ var fields=F.map(function(f){return '<label class="fi" data-w="'+f[0]+'"><span>'+f[1]+'</span><input data-f="'+f[0]+'" type="'+f[3]+'" placeholder="'+esc(f[2])+'"'+(f[0]==='province'?' list="provs"':'')+(f[0]==='dni'||f[0]==='zip'?' inputmode="numeric"':'')+' autocomplete="off"></label>'}).join('')+
+  '<label class="fi" data-w="notes"><span>Indicaciones (opcional)</span><textarea data-f="notes" rows="5" placeholder="Ej: entre calles, horario de entrega, referencias…"></textarea></label>';
+ var h='<div class="ck" id="ck"><div class="ckw"><header class="ckh"><button class="x" data-a="close" data-t="ck" aria-label="Cerrar">'+FB.close+'</button><h2>Finalizar compra</h2></header>'+
+ '<section class="box"><h3>Tu pedido</h3><div id="sum"></div></section><section class="box sumbox" id="sumbox"><div id="tots"></div></section>'+
+ '<section class="box"><h3>Canjear código</h3><div class="cr"><input class="in" id="code" placeholder="Código de descuento" autocomplete="off"><button class="btn" data-a="applycode"'+bk('redeem')+'>'+bt('redeem')+'</button></div><div class="msg" id="cmsg"></div></section>'+
+ '<section class="box"><h3>Tus datos</h3><datalist id="provs">'+PROVS.map(function(p){return '<option value="'+esc(p)+'">'}).join('')+'</datalist><div id="fields">'+fields+'</div></section>'+
+ '<section class="box" id="shipbox" hidden></section><div id="final"></div></div></div>';
+ var ce=mount(h,'ck');
+ ce.addEventListener('scroll',function(){var b=$('#sumbox');if(!b)return;b.classList.toggle('mini',ce.scrollTop>60&&b.getBoundingClientRect().top<=ce.getBoundingClientRect().top+4)},{passive:true});
+ $('#sum').innerHTML=calc().L.map(function(x){return '<div class="ci">'+img(x.p.images[0],x.p.name)+'<div class="cin"><b>'+esc(x.p.name)+'</b>'+(x.c.size?'<small>Talle: '+esc(x.c.size)+'</small>':'')+'<small>'+x.c.qty+' × '+fmt(eff(x.p))+'</small></div><div class="cs">'+fmt(eff(x.p)*x.c.qty)+'</div></div>'}).join('');
+ updateCk();
+}
+function updateCk(){
+ if(!ck)return;
+ var ex=exclMatch(),c=calc();
+ Array.prototype.forEach.call(document.querySelectorAll('#fields [data-w]'),function(w){w.hidden=ex&&EXF.indexOf(w.dataset.w)<0});
+ var t='<div class="row r-sub"><span>Subtotal</span><span>'+fmt(c.sub)+'</span></div>';
+ if(ck.code)t+='<div class="row r-disc"><span>Descuento ('+esc(ck.code)+' −'+ck.pct+'%)</span><span>−'+fmt(c.disc)+'</span></div>';
+ if(ex)t+='<div class="row r-ship"><span>Envío</span><span>A coordinar</span></div>';
+ else if(ck.opt)t+='<div class="row r-ship"><span>Envío ('+esc(c.m?c.m.name:'')+' · '+(ck.opt==='home'?'domicilio':'sucursal')+')</span><span>'+(c.free?'<span class="free">Gratis</span>':fmt(c.ship))+'</span></div>';
+ t+='<div class="row tot r-tot"><span>Total</span><span>'+fmt(c.total)+'</span></div>';
+ if(c.free&&!ex)t+='<p class="note free">¡Tu compra tiene envío gratis!</p>';
+ $('#tots').innerHTML=t;
+ var ok=valid(ex),sb=$('#shipbox'),fin=$('#final');
+ if(ex){
+  sb.hidden=true;
+  fin.innerHTML=ok?'<button class="btn" data-a="final"'+bk('excl')+'>'+bt('excl')+'</button>':'<p class="note">Completá tus datos para continuar.</p>';
+  return;
+ }
+ if(!ok){sb.hidden=true;fin.innerHTML='<p class="note">Completá todos tus datos para elegir el medio de envío.</p>';return}
+ if(!D.ships.length){sb.hidden=true;fin.innerHTML='<button class="btn" data-a="final"'+bk('final')+'>'+bt('final')+'</button>';return}
+ sb.hidden=false;
+ var h='';
+ var ico=function(s){return s.icon?img(s.icon,s.name,'',szs(s.sz,true)):'<span class="ph">📦</span>'};
+ if(!ck.ship){
+  h='<h3>Elegí el medio de envío</h3>'+D.ships.map(function(s){return '<button class="sm" data-a="ship" data-id="'+s.id+'">'+ico(s)+'<span>'+esc(s.name)+'</span></button>'}).join('');
+ }else{
+  var m=D.ships.filter(function(s){return s.id===ck.ship})[0];
+  h='<h3>Medio de envío</h3><div class="sm sel">'+ico(m)+'<span>'+esc(m.name)+'</span></div><button class="lnk" data-a="unship"'+bk('unship')+' style="width:auto;padding:0 0 12px">'+bt('unship')+'</button><h3>¿Cómo lo recibís?</h3>'+
+  ['branch','home'].map(function(o){var pr=c.free?'<span class="free">Gratis</span>':fmt(m[o]);return '<button class="opt" data-a="opt" data-o="'+o+'"><span class="cdot'+(ck.opt===o?' on':'')+'"></span><span>'+(o==='branch'?'Envío a sucursal':'Envío a domicilio')+'</span><b>'+pr+'</b></button>'}).join('');
+ }
+ sb.innerHTML=h;
+ fin.innerHTML=(!ck.ship||!ck.opt)?'':'<button class="btn" data-a="final"'+bk('final')+'>'+bt('final')+'</button>';
+}
+function waMsg(){
+ var c=calc(),ex=exclMatch(),L=[];
+ L.push('Hola, quiero confirmar mi compra.','','Precio Total: '+fmt(c.total),'','Productos:');
+ c.L.forEach(function(x){L.push('- '+x.p.name+(x.c.size?' (Talle: '+x.c.size+')':'')+' x'+x.c.qty+' = '+fmt(eff(x.p)*x.c.qty))});
+ L.push('');
+ if(ex)L.push('• Medio de Envío: Envío a sucursal (Coordinar)');
+ else L.push('• Medio de Envío: '+(c.m?c.m.name+' ('+(ck.opt==='home'?'Domicilio':'Sucursal')+')':'A coordinar'));
+ if(ck.code)L.push('','*Código Canjeado:* '+ck.code);
+ L.push('','Datos del Cliente:','• Nombre: '+g('name'));
+ if(!ex)L.push('• DNI: '+g('dni'));
+ L.push('• Teléfono: '+g('phone'),'• Provincia: '+g('province'),'• Localidad: '+g('city'));
+ if(!ex)L.push('• Código Postal: '+g('zip'),'• Dirección: '+g('address'),'• Correo: '+g('email'));
+ L.push('• Indicaciones: '+(g('notes')||'Sin indicaciones'));
+ return L.join('\n');
+}
+
+/* ---------- Eventos ---------- */
+document.addEventListener('click',function(e){
+ var t=e.target.closest('[data-a]');
+ if(!t){if(e.target.classList&&e.target.classList.contains('ov')){e.target.remove();lock()}return}
+ var a=t.dataset.a,d=t.dataset;
+ if(a==='menu')openMenu();
+ else if(a==='home')go(D.pages[0].id);
+ else if(a==='cartopen')openCart();
+ else if(a==='close')closeL(d.t);
+ else if(a==='go')go(d.p);
+ else if(a==='open'){closeL('mm');openProduct(d.id)}
+ else if(a==='buy')quick(d.id,'buy');
+ else if(a==='add')quick(d.id,'add');
+ else if(a==='thumb')showImg(+d.i);
+ else if(a==='prev'||a==='next'){var c0=t.closest('.car');if(c0)slideTo(c0,(+c0.dataset.i)+(a==='next'?1:-1))}
+ else if(a==='gprev')showImg((pm.idx||0)-1);
+ else if(a==='gnext')showImg((pm.idx||0)+1);
+ else if(a==='size'){pm.size=d.s;Array.prototype.forEach.call(document.querySelectorAll('#pm .chip'),function(c){c.classList.toggle('on',c.dataset.s===d.s)});$('#pmerr').textContent=''}
+ else if(a==='zoom')mount('<div class="ov mod" id="gm"><div class="dlg box guide"><button class="x" data-a="close" data-t="gm" aria-label="Cerrar">'+FB.close+'</button>'+img(d.f,'','gimg')+'</div></div>','gm');
+ else if(a==='navopen'){navStack.push(d.id);renderSub()}
+ else if(a==='navback'){navStack.pop();if(navStack.length)renderSub();else $('#mm .drawer').innerHTML=menuRoot()}
+ else if(a==='navgo'){if(d.p)go(d.p)}
+ else if(a==='guide')openGuide(d.id);
+ else if(a==='pbuy'){if(ensureSize()){var id=pm.id,sz=pm.size||'';openCheckout([{id:id,size:sz,qty:1}])}}
+ else if(a==='padd'){if(ensureSize())addCart(pm.id,pm.size||'',1)}
+ else if(a==='inc'){var c1=st.cart[+d.i];if(c1){c1.qty=Math.min(99,c1.qty+1);persist();updCount();renderCart()}}
+ else if(a==='dec'){var c2=st.cart[+d.i];if(c2){c2.qty--;if(c2.qty<=0)st.cart.splice(+d.i,1);persist();updCount();renderCart()}}
+ else if(a==='clear'){st.cart=[];persist();updCount();renderCart()}
+ else if(a==='cartbuy')openCheckout(st.cart.map(function(c){return {id:c.id,size:c.size,qty:c.qty}}));
+ else if(a==='theme'){st.theme=st.theme?0:1;applyTheme();persist();notify();t.classList.toggle('r',!!st.theme);t.setAttribute('aria-checked',st.theme?'true':'false');$('#tn0').classList.toggle('on',!st.theme);$('#tn1').classList.toggle('on',!!st.theme)}
+ else if(a==='applycode'){
+  var v=String($('#code').value).trim().toUpperCase(),f=D.codes.filter(function(c){return String(c.code).trim().toUpperCase()===v})[0],m=$('#cmsg');
+  if(v&&f){ck.code=f.code;ck.pct=Number(f.pct)||0;m.className='msg ok';m.textContent='Código aplicado: '+ck.pct+'% de descuento.'}
+  else{ck.code=null;ck.pct=0;m.className='msg bad';m.textContent='El código no es válido.'}
+  updateCk();
+ }
+ else if(a==='ship'){ck.ship=d.id;ck.opt=null;updateCk()}
+ else if(a==='unship'){ck.ship=null;ck.opt=null;updateCk()}
+ else if(a==='opt'){ck.opt=d.o;updateCk()}
+ else if(a==='final'){
+  var num=waNum();if(!num){toast('Falta configurar el número de WhatsApp');return}
+  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(waMsg()),'_blank');
+ }
+});
+document.addEventListener('input',function(e){
+ var el=e.target;
+ if(el.id==='q')renderQ(el.value);
+ else if(ck&&el.dataset&&el.dataset.f){ck.data[el.dataset.f]=el.value;updateCk()}
+});
+document.addEventListener('keydown',function(e){
+ if(e.key==='Escape'&&layer&&layer.lastElementChild){layer.lastElementChild.remove();lock()}
+ else if((e.key==='ArrowLeft'||e.key==='ArrowRight')&&layer&&layer.lastElementChild&&layer.lastElementChild.id==='pm'&&pm)showImg((pm.idx||0)+(e.key==='ArrowRight'?1:-1));
+});
+
+var tx=0,ty=0,tc=null;
+document.addEventListener('touchstart',function(e){var c=e.target.closest&&e.target.closest('.car');if(!c)return;tc=c;tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',function(e){if(!tc)return;var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))slideTo(tc,(+tc.dataset.i)+(dx<0?1:-1));tc=null},{passive:true});
+load();
+if(D.themeMode==='single')st.theme=Number(D.defaultTheme)||0;
+if(!D.pages.some(function(p){return p.id===st.page}))st.page=D.pages[0].id;
+shell();applyTheme();renderBar();renderMain();updCount();notify();
+})();
+
+</script>
+</body>
+</html>
